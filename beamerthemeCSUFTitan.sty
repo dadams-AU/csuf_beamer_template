@@ -1,0 +1,134 @@
+% CSUF MPA Beamer Theme (Metropolis-based)
+\ProvidesPackage{beamerthemeCSUFTitan}[2025/03/08 CSUF Titan Beamer Theme]
+
+\RequirePackage{ifluatex}
+\RequirePackage{etoolbox}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{calc}
+\RequirePackage{tikz}
+\RequirePackage{microtype}
+\RequirePackage{csquotes}
+\RequirePackage{qrcode}
+\RequirePackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  urlcolor=black
+}
+\urlstyle{same}
+
+% Fonts (LuaLaTeX/XeLaTeX preferred; pdfLaTeX falls back automatically)
+\ifluatex
+  \RequirePackage{fontspec}
+  \setsansfont[
+    Ligatures=TeX,
+    Scale=0.96,
+  ]{TeX Gyre Heros}
+\else
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage{lmodern}
+\fi
+
+% Base theme
+\usetheme[numbering=fraction,progressbar=frametitle]{metropolis}
+
+% CSUF brand colors
+\definecolor{titanblue}{HTML}{00244E}
+\definecolor{mediumblue}{HTML}{0F3F8C}
+\definecolor{skyblue}{HTML}{EBFBFF}
+\definecolor{titanorange}{HTML}{FF7900}
+\definecolor{titangray}{HTML}{F5F5F5}
+\definecolor{titantext}{HTML}{222222}
+
+% Metropolis color + font tweaks (high-contrast, large room friendly)
+\setbeamercolor{normal text}{fg=titantext,bg=white}
+\setbeamercolor{alerted text}{fg=titanorange}
+\setbeamercolor{example text}{fg=mediumblue}
+
+\setbeamercolor{title}{fg=titanblue}
+\setbeamercolor{subtitle}{fg=mediumblue}
+\setbeamercolor{frametitle}{fg=white,bg=titanblue}
+\setbeamercolor{progress bar}{fg=titanorange,bg=titangray}
+\setbeamercolor{block title}{fg=white,bg=titanblue}
+\setbeamercolor{block body}{fg=titantext,bg=skyblue!12}
+
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{block title}{series=\bfseries}
+
+% Section break slides
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{standout}{bg=titanblue, fg=titanorange}
+\setbeamercolor{palette primary}{bg=titanblue, fg=titanorange}
+\setbeamercolor{section title}{fg=titanorange}
+\setbeamercolor{section page}{bg=titanblue, fg=titanorange}
+
+% Additional metropolis-specific color overrides
+\setbeamercolor{section in toc}{fg=titanorange}
+\setbeamercolor{subsection in toc}{fg=titanorange}
+\setbeamercolor{title in head/foot}{fg=titanorange}
+\setbeamercolor{author in head/foot}{fg=titanorange}
+\setbeamercolor{date in head/foot}{fg=titanorange}
+
+% Override metropolis section page template colors
+\AtBeginDocument{
+  \setbeamercolor{section title}{fg=titanorange}
+  \setbeamercolor{palette primary}{fg=titanorange, bg=titanblue}
+}
+
+\metroset{sectionpage=progressbar}
+
+% Add progress bar
+\makeatletter
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4cm,dp=0cm]{titanblue}%
+    \begin{tikzpicture}
+      \fill[titanorange] (0,0) rectangle (\the\paperwidth*\insertframenumber/\inserttotalframenumber,0.4cm);
+    \end{tikzpicture}%
+  \end{beamercolorbox}%
+}
+\makeatother
+
+% Helpers
+\newcommand{\ShowIfNonempty}[1]{\ifdefempty{#1}{}{#1\par}}
+
+% Section title slides
+\AtBeginSection[]{
+  {\setbeamercolor{background canvas}{bg=titanblue}%
+   \setbeamercolor{standout}{bg=titanblue, fg=titanorange}%
+   \setbeamercolor{section title}{fg=titanorange}%
+   \logo{\includegraphics[height=0.5cm]{images/csuf-logo-orange.png}}%
+   \begin{frame}[standout]
+     \centering
+     {\huge\textcolor{titanorange}{\insertsection}}
+     \vfill
+   \end{frame}}
+}
+
+% Uniform image height for faculty cards
+\newlength{\imageheight}
+\setlength{\imageheight}{3.4cm}
+\newcommand{\FacultyImage}[1]{%
+  \begin{tikzpicture}
+    \node[inner sep=0pt, rounded corners=6pt, clip] {\includegraphics[height=\imageheight]{#1}};
+  \end{tikzpicture}%
+}
+
+% Compact two-column list frame
+\newenvironment{twocolbullets}
+{\begin{columns}[T,onlytextwidth]\column{0.5\textwidth}\begin{itemize}}
+{\end{itemize}\column{0.5\textwidth}\begin{itemize}\end{itemize}\end{columns}}
+
+% A small "key dates" helper
+\newcommand{\KeyDate}[2]{\textbf{#1:} #2\par}
+
+% Logo helpers
+\newcommand{\CSUFSetTitleGraphic}[2][.75\textwidth]{%
+  \titlegraphic{\vspace{-0.75em}\includegraphics[width=#1]{#2}}%
+}
+\newcommand{\CSUFSetFooterLogo}[2][0.5cm]{%
+  \logo{\includegraphics[height=#1]{#2}}%
+}

@@ -1,0 +1,10 @@
+# latex gitignore file
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.log       
+*.nav
+*.out

@@ -1,0 +1,309 @@
+/* CSUF-inspired professional Marp theme (accessible) */
+@theme csuf-pro;
+
+:root {
+  --csuf-navy: #00244e;
+  --csuf-blue: #0f3f8c;
+  --csuf-orange: #ff7900;
+  --csuf-orange-dark: #cc5f00;
+  --csuf-ink: #1e1e1e;
+  --csuf-gray-100: #f7f7f8;
+  --csuf-gray-300: #d9dde3;
+  --csuf-gray-500: #6b7280;
+  --csuf-sky: #eef7ff;
+  --csuf-bg: #ffffff;
+}
+
+section {
+  font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--csuf-ink);
+  background:
+    radial-gradient(1200px 600px at 110% -10%, #e9f3ff 0%, transparent 60%),
+    radial-gradient(900px 480px at -10% 110%, #fff0e6 0%, transparent 55%),
+    linear-gradient(180deg, var(--csuf-bg) 0%, var(--csuf-bg) 62%, var(--csuf-gray-100) 100%);
+  padding: 64px 72px;
+  line-height: 1.35;
+}
+
+h1, h2, h3 {
+  color: var(--csuf-navy);
+  letter-spacing: 0.2px;
+  margin-bottom: 0.35em;
+}
+
+h1 { font-size: 48px; }
+
+h2 { font-size: 36px; }
+
+h3 { font-size: 28px; }
+
+p, li { font-size: 24px; }
+
+strong, em { color: var(--csuf-blue); }
+
+a {
+  color: var(--csuf-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:focus {
+  outline: 3px solid var(--csuf-orange);
+  outline-offset: 3px;
+}
+
+section::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 20px;
+  background: var(--csuf-navy);
+}
+
+section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--csuf-orange), var(--csuf-orange-dark));
+}
+
+footer {
+  font-size: 18px;
+  color: var(--csuf-gray-500);
+}
+
+code {
+  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.95em;
+}
+
+/* Logo lockup */
+.logo-lockup {
+  position: absolute;
+  right: 36px;
+  top: 28px;
+  height: 36px;
+}
+
+/* Force logo on for a slide */
+section.logo-on .logo-lockup {
+  display: block;
+}
+
+section.title .logo-lockup {
+  height: 40px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* Slide tone switches */
+section.professional .logo-lockup {
+  display: none;
+}
+
+section.classroom {
+  background:
+    radial-gradient(1200px 600px at 110% -10%, #f0f6ff 0%, transparent 60%),
+    radial-gradient(900px 480px at -10% 110%, #fff4e6 0%, transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #ffffff 62%, #f1f5f9 100%);
+}
+
+section.classroom h1,
+section.classroom h2,
+section.classroom h3 {
+  color: var(--csuf-blue);
+}
+
+section.classroom::before {
+  background: var(--csuf-blue);
+}
+
+section.classroom::after {
+  background: linear-gradient(90deg, #ffd1a3, var(--csuf-orange));
+}
+
+section.classroom .logo-lockup {
+  display: none;
+}
+
+/* Minimal variant */
+section.minimal {
+  background: #ffffff;
+}
+
+section.minimal::before,
+section.minimal::after {
+  display: none;
+}
+
+section.minimal h1,
+section.minimal h2,
+section.minimal h3 {
+  color: var(--csuf-navy);
+}
+
+section.minimal a {
+  color: var(--csuf-navy);
+}
+
+section.minimal .logo-lockup {
+  display: none;
+}
+
+/* Title slide */
+section.title {
+  background:
+    radial-gradient(800px 400px at 10% 10%, #234b87 0%, transparent 55%),
+    linear-gradient(135deg, var(--csuf-navy) 0%, #00142c 100%);
+  color: #ffffff;
+}
+
+section.title h1,
+section.title h2,
+section.title h3,
+section.title p,
+section.title strong,
+section.title em,
+section.title a {
+  color: #ffffff;
+}
+
+section.title a {
+  text-decoration-color: #ffffff;
+}
+
+section.title::before { height: 0; }
+
+section.title::after {
+  height: 10px;
+  background: linear-gradient(90deg, var(--csuf-orange), #ffc89a);
+}
+
+/* Section divider */
+section.section {
+  background: var(--csuf-navy);
+  color: #ffffff;
+  text-align: center;
+}
+
+section.section h2,
+section.section h3,
+section.section strong,
+section.section em,
+section.section p {
+  color: #ffffff;
+}
+
+section.section::before,
+section.section::after { background: none; }
+
+/* Callout slide */
+section.callout {
+  background: linear-gradient(180deg, var(--csuf-sky) 0%, var(--csuf-bg) 78%);
+}
+
+section.callout blockquote {
+  border-left: 6px solid var(--csuf-orange);
+  padding-left: 18px;
+  color: var(--csuf-blue);
+}
+
+/* Two-column helper */
+.columns {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 22px;
+}
+
+thead th {
+  text-align: left;
+  color: var(--csuf-navy);
+  border-bottom: 2px solid var(--csuf-orange);
+  padding-bottom: 8px;
+}
+
+tbody td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--csuf-gray-300);
+}
+
+/* Accessible list spacing */
+ul, ol {
+  margin-top: 0.4em;
+}
+
+li { margin: 0.3em 0; }
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto; }
+}
+
+/* Dark variant */
+@theme csuf-pro-dark;
+
+:root {
+  --csuf-navy: #0c1b2f;
+  --csuf-blue: #7fb1ff;
+  --csuf-orange: #ff9a3d;
+  --csuf-orange-dark: #ff7a00;
+  --csuf-ink: #f1f4f8;
+  --csuf-gray-100: #1c2433;
+  --csuf-gray-300: #2d3648;
+  --csuf-gray-500: #b0bac7;
+  --csuf-sky: #162235;
+  --csuf-bg: #0f1726;
+}
+
+/* Dark theme defaults */
+.logo-lockup {
+  display: none;
+}
+
+section {
+  color: var(--csuf-ink);
+  background:
+    radial-gradient(1100px 520px at 120% -10%, #1b355e 0%, transparent 60%),
+    radial-gradient(900px 460px at -10% 115%, #3a1f0b 0%, transparent 55%),
+    linear-gradient(180deg, var(--csuf-bg) 0%, var(--csuf-bg) 62%, var(--csuf-gray-100) 100%);
+}
+
+h1, h2, h3 { color: #e8f1ff; }
+
+strong, em, a { color: var(--csuf-blue); }
+
+section::before { background: #0a1322; }
+
+section::after {
+  background: linear-gradient(90deg, var(--csuf-orange), var(--csuf-orange-dark));
+}
+
+footer { color: var(--csuf-gray-500); }
+
+section.title {
+  background:
+    radial-gradient(800px 400px at 10% 10%, #2a4f88 0%, transparent 55%),
+    linear-gradient(135deg, #0a1322 0%, #050a14 100%);
+}
+
+section.callout {
+  background: linear-gradient(180deg, #162235 0%, var(--csuf-bg) 78%);
+}
+
+section.callout blockquote { color: #cfe2ff; }
+
+thead th { color: #e8f1ff; }
+
+tbody td { border-bottom: 1px solid var(--csuf-gray-300); }

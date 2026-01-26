@@ -11,6 +11,8 @@
 \RequirePackage{csquotes}
 \RequirePackage{qrcode}
 \RequirePackage{hyperref}
+\RequirePackage{accsupp}
+\RequirePackage{pgfpages}
 
 \hypersetup{
   colorlinks=true,
@@ -42,6 +44,8 @@
 \definecolor{titanorange}{HTML}{FF7900}
 \definecolor{titangray}{HTML}{F5F5F5}
 \definecolor{titantext}{HTML}{222222}
+% Accent for rules/dividers
+\definecolor{titanaccent}{HTML}{E46C0A}
 
 % Metropolis color + font tweaks (high-contrast, large room friendly)
 \setbeamercolor{normal text}{fg=titantext,bg=white}
@@ -52,12 +56,18 @@
 \setbeamercolor{subtitle}{fg=mediumblue}
 \setbeamercolor{frametitle}{fg=white,bg=titanblue}
 \setbeamercolor{progress bar}{fg=titanorange,bg=titangray}
+\setbeamercolor{csuf progress}{fg=titanorange,bg=titangray}
 \setbeamercolor{block title}{fg=white,bg=titanblue}
 \setbeamercolor{block body}{fg=titantext,bg=skyblue!12}
+ \setbeamercolor{footline}{fg=titantext,bg=titangray}
 
 \setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize,series=\mdseries}
+\setbeamerfont{author}{size=\small,series=\mdseries}
+\setbeamerfont{date}{size=\small,series=\mdseries}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \setbeamerfont{block title}{series=\bfseries}
+\setbeamerfont{footline}{size=\scriptsize}
 
 % Section break slides
 \setbeamercolor{background canvas}{bg=white}
@@ -81,16 +91,62 @@
 
 \metroset{sectionpage=progressbar}
 
+% Title page
+\makeatletter
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[titanblue] (current page.north west) rectangle ([yshift=-1.4cm]current page.north east);
+    \fill[titanorange] ([yshift=-1.4cm]current page.north west) rectangle ([yshift=-1.55cm]current page.north east);
+  \end{tikzpicture}%
+  \vspace*{0.9cm}
+  {\usebeamerfont{title}\color{titanblue}\inserttitle\par}
+  \ifdefempty{\insertsubtitle}{}{%
+    \vspace{0.3em}
+    {\usebeamerfont{subtitle}\color{mediumblue}\insertsubtitle\par}%
+  }%
+  \vspace{1.2em}
+  {\usebeamerfont{author}\color{titantext}\insertauthor\par}
+  {\usebeamerfont{date}\color{titantext}\insertdate\par}
+  \vfill
+  \ifdefempty{\inserttitlegraphic}{}{%
+    \inserttitlegraphic\par
+  }%
+}
+\makeatother
+
 % Add progress bar
 \makeatletter
 \setbeamertemplate{headline}{%
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4cm,dp=0cm]{titanblue}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.4cm,dp=0cm]{csuf progress}%
     \begin{tikzpicture}
       \fill[titanorange] (0,0) rectangle (\the\paperwidth*\insertframenumber/\inserttotalframenumber,0.4cm);
     \end{tikzpicture}%
   \end{beamercolorbox}%
 }
 \makeatother
+
+% Frametitle with accent rule
+\setbeamertemplate{frametitle}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.9cm,dp=0.25cm,leftskip=0.8cm,rightskip=0.6cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \color{titanaccent}\rule{\paperwidth}{0.6pt}%
+}
+
+% Footline
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.35cm,dp=0.15cm,leftskip=0.6cm,rightskip=0.6cm]{footline}%
+    \usebeamerfont{footline}\insertshorttitle\hfill\insertshortauthor\hfill\insertframenumber/\inserttotalframenumber
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{navigation symbols}{}
+
+% Bullets and blocks
+\setbeamertemplate{itemize item}{\color{titanorange}\large\raise0.2ex\hbox{\textbullet}}
+\setbeamertemplate{itemize subitem}{\color{titanblue}\normalsize\raise0.15ex\hbox{\textbullet}}
+\setbeamertemplate{itemize subsubitem}{\color{titanaccent}\small\raise0.1ex\hbox{\textbullet}}
+\setbeamertemplate{blocks}[rounded][shadow=false]
 
 % Helpers
 \newcommand{\ShowIfNonempty}[1]{\ifdefempty{#1}{}{#1\par}}
@@ -99,11 +155,11 @@
 \AtBeginSection[]{
   {\setbeamercolor{background canvas}{bg=titanblue}%
    \setbeamercolor{standout}{bg=titanblue, fg=titanorange}%
-   \setbeamercolor{section title}{fg=titanorange}%
-   \logo{\includegraphics[height=0.5cm]{images/csuf-logo-orange.png}}%
+   \setbeamercolor{section title}{fg=white}%
+   \logo{\includegraphics[height=0.35cm]{images/csuf-logo-orange.png}}%
    \begin{frame}[standout]
      \centering
-     {\huge\textcolor{titanorange}{\insertsection}}
+     {\huge\textcolor{white}{\insertsection}}
      \vfill
    \end{frame}}
 }
@@ -131,4 +187,27 @@
 }
 \newcommand{\CSUFSetFooterLogo}[2][0.5cm]{%
   \logo{\includegraphics[height=#1]{#2}}%
+}
+
+% Accessible logo helpers (with alt text)
+\newcommand{\CSUFSetTitleGraphicAlt}[3][.75\textwidth]{%
+  \titlegraphic{\vspace{-0.75em}\CSUFAltTextImage[width=#1]{#2}{#3}}%
+}
+\newcommand{\CSUFSetFooterLogoAlt}[3][0.5cm]{%
+  \logo{\CSUFAltTextImage[height=#1]{#2}{#3}}%
+}
+
+% Accessible image helper for screen readers
+\newcommand{\CSUFAltTextImage}[3][]{%
+  \BeginAccSupp{method=escape,ActualText={#3}}%
+  \includegraphics[#1]{#2}%
+  \EndAccSupp{}%
+}
+
+% Handout layout helpers
+\newcommand{\CSUFHandoutTwoUp}{%
+  \pgfpagesuselayout{2 on 1}[letterpaper,border shrink=5mm]%
+}
+\newcommand{\CSUFHandoutFourUp}{%
+  \pgfpagesuselayout{4 on 1}[letterpaper,border shrink=5mm]%
 }

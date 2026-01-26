@@ -1,21 +1,29 @@
 % CSUF Beamer Template (minimal starter)
-\documentclass[10pt]{beamer}
+% Handout mode: \documentclass[10pt,handout]{beamer}
 \usetheme{CSUFTitan}
 
 % --------------------
 % Title metadata
 % --------------------
-\title{Presentation Title}
+\title[Presentation Title]{Presentation Title}
 \subtitle{Subtitle (optional)}
-\author{Presenter Name}
+\author[Presenter]{Presenter Name}
 \date{\today}
-% Optional logos:
-\CSUFSetTitleGraphic{images/csuf-logo.png}
-\CSUFSetFooterLogo[0.35cm]{images/csuf-logo.png}
+% Optional logos (accessible with alt text):
+\CSUFSetTitleGraphicAlt{images/csuf-logo.png}{California State University, Fullerton logo}
+\CSUFSetFooterLogoAlt[0.35cm]{images/csuf-logo.png}{California State University, Fullerton logo}
+
+% Handout layout (uncomment one)
+% \CSUFHandoutTwoUp
+% \CSUFHandoutFourUp
 
 \begin{document}
 
 \maketitle
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
 
 \section{Section Title}
 
@@ -27,4 +35,20 @@
   \end{itemize}
 \end{frame} 
 
+\begin{frame}{Two-Column Slide}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.52\textwidth}
+    \begin{block}{Key Point}
+      This block highlights an essential takeaway with brand color contrast.
+    \end{block}
+    \begin{itemize}
+      \item Concise bullets
+      \item Consistent spacing
+    \end{itemize}
+    \column{0.48\textwidth}
+    \CSUFAltTextImage[width=\linewidth]{images/csuf-logo-orange.png}{CSUF Titan wordmark in orange}
+  \end{columns}
+\end{frame}
+
 \end{document}
+

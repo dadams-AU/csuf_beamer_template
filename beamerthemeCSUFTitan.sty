@@ -71,10 +71,10 @@
 
 % Section break slides
 \setbeamercolor{background canvas}{bg=white}
-\setbeamercolor{standout}{bg=titanblue, fg=titanorange}
+\setbeamercolor{standout}{bg=titanblue, fg=white}
 \setbeamercolor{palette primary}{bg=titanblue, fg=titanorange}
-\setbeamercolor{section title}{fg=titanorange}
-\setbeamercolor{section page}{bg=titanblue, fg=titanorange}
+\setbeamercolor{section title}{fg=white}
+\setbeamercolor{section page}{bg=titanblue, fg=white}
 
 % Additional metropolis-specific color overrides
 \setbeamercolor{section in toc}{fg=titanorange}
@@ -83,13 +83,15 @@
 \setbeamercolor{author in head/foot}{fg=titanorange}
 \setbeamercolor{date in head/foot}{fg=titanorange}
 
-% Override metropolis section page template colors
+% Override metropolis section page colors (but we will show our own frame)
 \AtBeginDocument{
-  \setbeamercolor{section title}{fg=titanorange}
+  \setbeamercolor{section title}{fg=white}
+  \setbeamercolor{section page}{fg=white,bg=titanblue}
   \setbeamercolor{palette primary}{fg=titanorange, bg=titanblue}
 }
 
-\metroset{sectionpage=progressbar}
+% Disable metropolis section page; we supply our own section frame
+\metroset{sectionpage=none}
 
 % Title page
 \makeatletter
@@ -98,7 +100,7 @@
     \fill[titanblue] (current page.north west) rectangle ([yshift=-1.4cm]current page.north east);
     \fill[titanorange] ([yshift=-1.4cm]current page.north west) rectangle ([yshift=-1.55cm]current page.north east);
   \end{tikzpicture}%
-  \vspace*{0.9cm}
+  \vspace*{0.5cm}
   {\usebeamerfont{title}\color{titanblue}\inserttitle\par}
   \ifdefempty{\insertsubtitle}{}{%
     \vspace{0.3em}
@@ -152,16 +154,26 @@
 \newcommand{\ShowIfNonempty}[1]{\ifdefempty{#1}{}{#1\par}}
 
 % Section title slides
-\AtBeginSection[]{
-  {\setbeamercolor{background canvas}{bg=titanblue}%
-   \setbeamercolor{standout}{bg=titanblue, fg=titanorange}%
-   \setbeamercolor{section title}{fg=white}%
+\AtBeginSection[]{%
+  {\begingroup
+   % Force white foreground on titan blue background for section slides
+   \setbeamercolor*{background canvas}{bg=titanblue}%
+   \setbeamercolor*{normal text}{fg=white,bg=titanblue}%
+   \setbeamercolor*{standout}{bg=titanblue, fg=white}%
+   \setbeamercolor*{section title}{fg=white,bg=titanblue}%
+   \hypersetup{linkcolor=white,urlcolor=white,citecolor=white}% ensure links render white
    \logo{\includegraphics[height=0.35cm]{images/csuf-logo-orange.png}}%
-   \begin{frame}[standout]
-     \centering
-     {\huge\textcolor{white}{\insertsection}}
+   \begin{frame}[plain,noframenumbering]
+     \setbeamercolor{background canvas}{bg=titanblue}%
+     \setbeamertemplate{headline}{}% remove bars
+     \setbeamertemplate{footline}{}% remove footer
+     \color{white}% ensure text is white
      \vfill
-   \end{frame}}
+     \centering
+     {\usebeamerfont{section title}\LARGE\bfseries \textcolor{white}{\insertsection}}
+     \vfill
+   \end{frame}
+   \endgroup}%
 }
 
 % Uniform image height for faculty cards

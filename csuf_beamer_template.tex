@@ -1,5 +1,6 @@
 % CSUF Beamer Template (minimal starter)
 % Handout mode: \documentclass[10pt,handout]{beamer}
+\documentclass[10pt]{beamer}
 \usetheme{CSUFTitan}
 
 % --------------------
@@ -48,6 +49,31 @@
     \column{0.48\textwidth}
     \CSUFAltTextImage[width=\linewidth]{images/csuf-logo-orange.png}{CSUF Titan wordmark in orange}
   \end{columns}
+\end{frame}
+
+\section{Data \& Metrics}
+
+\begin{frame}{Quick Stats Table}
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{lccc}
+      \toprule
+      Metric & Baseline & Current & Delta \\
+      \midrule
+      Engagement & 65\% & 74\% & +9pp \\
+      Completion & 72\% & 79\% & +7pp \\
+      Satisfaction & 4.1 & 4.4 & +0.3 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Math Highlight}
+  Key identity used in our model refinement:
+  \[
+    \nabla_\theta \mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^N \nabla_\theta \log p_\theta(y_i \mid x_i)
+  \]
+  This emphasizes per-sample log-likelihood gradients averaged across the batch.
 \end{frame}
 
 \end{document}

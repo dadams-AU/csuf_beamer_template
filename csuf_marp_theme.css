@@ -1,57 +1,136 @@
-/* CSUF-inspired professional Marp theme (accessible) */
+/* CSUF-inspired Professional Marp Theme v2.2 */
 @theme csuf-pro;
 
 :root {
+  /* Brand Palette */
   --csuf-navy: #00244e;
   --csuf-blue: #0f3f8c;
   --csuf-orange: #ff7900;
   --csuf-orange-dark: #cc5f00;
+
+  /* Neutral Palette */
   --csuf-ink: #1e1e1e;
   --csuf-gray-100: #f7f7f8;
-  --csuf-gray-300: #d9dde3;
+  --csuf-gray-200: #e5e7eb;
+  --csuf-gray-300: #d1d5db;
   --csuf-gray-500: #6b7280;
   --csuf-sky: #eef7ff;
   --csuf-bg: #ffffff;
+
+  /* Functional Colors */
+  --code-bg: #f3f4f6;
+  --code-text: #1f2937;
 }
 
+/* --- Base Slide Settings --- */
 section {
   font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  line-height: 1.5;
   color: var(--csuf-ink);
+  letter-spacing: -0.01em;
+  padding: 60px 70px;
+
+  /* Adjusted Background: Pushed the gray gradient way down to avoid the "huge footer" look */
   background:
-    radial-gradient(1200px 600px at 110% -10%, #e9f3ff 0%, transparent 60%),
-    radial-gradient(900px 480px at -10% 110%, #fff0e6 0%, transparent 55%),
-    linear-gradient(180deg, var(--csuf-bg) 0%, var(--csuf-bg) 62%, var(--csuf-gray-100) 100%);
-  padding: 64px 72px;
-  line-height: 1.35;
+  radial-gradient(1200px 600px at 110% -10%, #e9f3ff 0%, transparent 60%),
+  radial-gradient(900px 480px at -10% 110%, #fff0e6 0%, transparent 55%),
+  linear-gradient(180deg, var(--csuf-bg) 0%, var(--csuf-bg) 90%, var(--csuf-gray-100) 100%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-h1, h2, h3 {
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
   color: var(--csuf-navy);
-  letter-spacing: 0.2px;
-  margin-bottom: 0.35em;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.6em;
+  line-height: 1.2;
 }
 
-h1 { font-size: 48px; }
+h1 { font-size: 46px; letter-spacing: -0.02em; }
+h2 { font-size: 36px; border-bottom: 2px solid var(--csuf-gray-200); padding-bottom: 10px; margin-bottom: 20px;}
+h3 { font-size: 28px; color: var(--csuf-blue); margin-bottom: 15px; }
+h4 { font-size: 24px; color: var(--csuf-orange-dark); text-transform: uppercase; letter-spacing: 1px; }
 
-h2 { font-size: 36px; }
+p { margin-bottom: 1rem; }
 
-h3 { font-size: 28px; }
+p.lead {
+  font-size: 30px;
+  font-weight: 300;
+  color: var(--csuf-blue);
+  line-height: 1.4;
+}
 
-p, li { font-size: 24px; }
-
-strong, em { color: var(--csuf-blue); }
+strong { color: var(--csuf-blue); font-weight: 700; }
+em { color: var(--csuf-orange-dark); font-style: italic; }
 
 a {
   color: var(--csuf-blue);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+a:hover { border-bottom-color: var(--csuf-orange); }
+
+/* --- Header & Footer (Fixed) --- */
+header, footer {
+  position: absolute;
+  left: 70px;
+  width: calc(100% - 140px);
+  z-index: 10;
+  pointer-events: none;
 }
 
-a:focus {
-  outline: 3px solid var(--csuf-orange);
-  outline-offset: 3px;
+header {
+  top: 30px;
+  font-size: 16px;
+  color: var(--csuf-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
+/* FIXED: Footer Visibility and Position */
+footer {
+  bottom: 18px; /* Slightly lower to hug the bottom */
+  font-size: 14px;
+  /* Changed from gray to Navy for high visibility */
+  color: var(--csuf-navy);
+  font-weight: 600; /* Made slightly bolder for readability */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Slide Numbers (Pagination) */
+/* This is the Orange Bar */
+section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /* Reduced from 8px to 4px to be less obtrusive */
+  height: 4px;
+  background: linear-gradient(90deg, var(--csuf-orange), var(--csuf-orange-dark));
+  z-index: 1;
+}
+
+/* Pagination number specific styling */
+section .marpit-pagination {
+  position: absolute;
+  bottom: 18px;
+  right: 70px;
+  font-size: 14px;
+  color: var(--csuf-navy); /* Matches footer text */
+  font-weight: 600;
+  z-index: 20;
+}
+
+/* Top Navy Bar */
 section::before {
   content: "";
   position: absolute;
@@ -62,196 +141,150 @@ section::before {
   background: var(--csuf-navy);
 }
 
-section::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 6px;
-  background: linear-gradient(90deg, var(--csuf-orange), var(--csuf-orange-dark));
-}
-
-footer {
-  font-size: 18px;
-  color: var(--csuf-gray-500);
+/* --- Code Blocks --- */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--csuf-gray-300);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 10px 0 20px 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 code {
-  font-family: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-  font-size: 0.95em;
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.85em;
+  color: var(--code-text);
+  background: rgba(0,0,0,0.05);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
 }
 
-/* Logo lockup */
-.logo-lockup {
-  position: absolute;
-  right: 36px;
-  top: 28px;
-  height: 36px;
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 0.9em;
 }
 
-/* Force logo on for a slide */
-section.logo-on .logo-lockup {
-  display: block;
-}
-
-section.title .logo-lockup {
-  height: 40px;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
-}
-
-/* Slide tone switches */
-section.professional .logo-lockup {
-  display: none;
-}
-
-section.classroom {
-  background:
-    radial-gradient(1200px 600px at 110% -10%, #f0f6ff 0%, transparent 60%),
-    radial-gradient(900px 480px at -10% 110%, #fff4e6 0%, transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #ffffff 62%, #f1f5f9 100%);
-}
-
-section.classroom h1,
-section.classroom h2,
-section.classroom h3 {
-  color: var(--csuf-blue);
-}
-
-section.classroom::before {
-  background: var(--csuf-blue);
-}
-
-section.classroom::after {
-  background: linear-gradient(90deg, #ffd1a3, var(--csuf-orange));
-}
-
-section.classroom .logo-lockup {
-  display: none;
-}
-
-/* Minimal variant */
-section.minimal {
-  background: #ffffff;
-}
-
-section.minimal::before,
-section.minimal::after {
-  display: none;
-}
-
-section.minimal h1,
-section.minimal h2,
-section.minimal h3 {
-  color: var(--csuf-navy);
-}
-
-section.minimal a {
-  color: var(--csuf-navy);
-}
-
-section.minimal .logo-lockup {
-  display: none;
-}
-
-/* Title slide */
-section.title {
-  background:
-    radial-gradient(800px 400px at 10% 10%, #234b87 0%, transparent 55%),
-    linear-gradient(135deg, var(--csuf-navy) 0%, #00142c 100%);
-  color: #ffffff;
-}
-
-section.title h1,
-section.title h2,
-section.title h3,
-section.title p,
-section.title strong,
-section.title em,
-section.title a {
-  color: #ffffff;
-}
-
-section.title a {
-  text-decoration-color: #ffffff;
-}
-
-section.title::before { height: 0; }
-
-section.title::after {
-  height: 10px;
-  background: linear-gradient(90deg, var(--csuf-orange), #ffc89a);
-}
-
-/* Section divider */
-section.section {
-  background: var(--csuf-navy);
-  color: #ffffff;
-  text-align: center;
-}
-
-section.section h2,
-section.section h3,
-section.section strong,
-section.section em,
-section.section p {
-  color: #ffffff;
-}
-
-section.section::before,
-section.section::after { background: none; }
-
-/* Callout slide */
-section.callout {
-  background: linear-gradient(180deg, var(--csuf-sky) 0%, var(--csuf-bg) 78%);
-}
-
-section.callout blockquote {
-  border-left: 6px solid var(--csuf-orange);
-  padding-left: 18px;
-  color: var(--csuf-blue);
-}
-
-/* Two-column helper */
-.columns {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 32px;
-  align-items: start;
-}
-
-/* Table styling */
+/* --- Tables --- */
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 22px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--csuf-gray-300);
 }
 
 thead th {
+  background: var(--csuf-navy);
+  color: #fff;
   text-align: left;
-  color: var(--csuf-navy);
-  border-bottom: 2px solid var(--csuf-orange);
-  padding-bottom: 8px;
+  padding: 12px 16px;
+  border-bottom: 3px solid var(--csuf-orange);
+  font-weight: 600;
 }
 
 tbody td {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--csuf-gray-300);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--csuf-gray-200);
 }
 
-/* Accessible list spacing */
-ul, ol {
-  margin-top: 0.4em;
+tbody tr:nth-child(even) {
+  background-color: rgba(0, 36, 78, 0.03);
 }
 
-li { margin: 0.3em 0; }
+/* --- Lists --- */
+ul, ol { margin-left: 1em; margin-bottom: 1rem; }
+li { margin-bottom: 0.5em; padding-left: 0.2em; }
 
-/* Reduced motion respect */
-@media (prefers-reduced-motion: reduce) {
-  * { scroll-behavior: auto; }
+ul li::marker { color: var(--csuf-orange); }
+ol li::marker { color: var(--csuf-blue); font-weight: bold; }
+
+/* --- Images --- */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: block;
+  margin: 0 auto;
 }
 
-/* Dark variant */
+/* --- Blockquotes --- */
+blockquote {
+  border-left: 6px solid var(--csuf-orange);
+  background: var(--csuf-sky);
+  margin: 0;
+  padding: 16px 24px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--csuf-navy);
+}
+
+/* --- Helper Classes --- */
+
+/* 2-Column Grid */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+/* Logo Lockup (Top Right) */
+.logo-lockup {
+  position: absolute;
+  right: 36px;
+  top: 36px;
+  height: 40px;
+  width: auto;
+  z-index: 20;
+}
+
+/* --- Specific Slide Types --- */
+
+/* Title Slide */
+section.title {
+  background:
+  radial-gradient(800px 400px at 10% 10%, #234b87 0%, transparent 55%),
+  linear-gradient(135deg, var(--csuf-navy) 0%, #00142c 100%);
+  color: #ffffff;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+section.title h1 { color: #ffffff; font-size: 64px; margin-bottom: 0.2em; }
+section.title h2 { color: var(--csuf-orange); border: none; font-size: 32px; font-weight: 400; }
+section.title p, section.title a { color: #d9dde3; }
+section.title::before { height: 0; }
+section.title::after { height: 6px; } /* Slightly thicker on title slide only */
+section.title footer { color: rgba(255,255,255,0.7); } /* Light footer on dark bg */
+section.title .marpit-pagination { color: rgba(255,255,255,0.7); }
+
+/* Section Divider (Section Break) */
+section.section {
+  background: var(--csuf-navy);
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+section.section h1, section.section h2 {
+  color: #ffffff;
+  border: none;
+}
+section.section h2 { font-size: 48px; }
+section.section p { color: var(--csuf-sky); font-size: 28px; }
+section.section::before, section.section::after { display: none; }
+
+
+/* ---------------------------------------------------- */
+/* Dark Theme Variant                                   */
+/* ---------------------------------------------------- */
 @theme csuf-pro-dark;
 
 :root {
@@ -261,49 +294,34 @@ li { margin: 0.3em 0; }
   --csuf-orange-dark: #ff7a00;
   --csuf-ink: #f1f4f8;
   --csuf-gray-100: #1c2433;
-  --csuf-gray-300: #2d3648;
-  --csuf-gray-500: #b0bac7;
+  --csuf-gray-200: #2d3648;
+  --csuf-gray-300: #374151;
+  --csuf-gray-500: #9ca3af;
   --csuf-sky: #162235;
   --csuf-bg: #0f1726;
-}
-
-/* Dark theme defaults */
-.logo-lockup {
-  display: none;
+  --code-bg: #1e293b;
+  --code-text: #e2e8f0;
 }
 
 section {
   color: var(--csuf-ink);
   background:
-    radial-gradient(1100px 520px at 120% -10%, #1b355e 0%, transparent 60%),
-    radial-gradient(900px 460px at -10% 115%, #3a1f0b 0%, transparent 55%),
-    linear-gradient(180deg, var(--csuf-bg) 0%, var(--csuf-bg) 62%, var(--csuf-gray-100) 100%);
+  radial-gradient(1100px 520px at 120% -10%, #1b355e 0%, transparent 60%),
+  radial-gradient(900px 460px at -10% 115%, #3a1f0b 0%, transparent 55%),
+  linear-gradient(180deg, var(--csuf-bg) 0%, var(--csuf-bg) 62%, var(--csuf-gray-100) 100%);
 }
 
-h1, h2, h3 { color: #e8f1ff; }
+h1, h2, h3, h4 { color: #e8f1ff; }
+h2 { border-bottom-color: var(--csuf-gray-300); }
+strong { color: var(--csuf-blue); }
 
-strong, em, a { color: var(--csuf-blue); }
+section::before { background: #08101c; }
 
-section::before { background: #0a1322; }
-
-section::after {
-  background: linear-gradient(90deg, var(--csuf-orange), var(--csuf-orange-dark));
-}
-
+/* Dark mode footer fixes */
 footer { color: var(--csuf-gray-500); }
+section .marpit-pagination { color: var(--csuf-gray-500); }
 
-section.title {
-  background:
-    radial-gradient(800px 400px at 10% 10%, #2a4f88 0%, transparent 55%),
-    linear-gradient(135deg, #0a1322 0%, #050a14 100%);
-}
-
-section.callout {
-  background: linear-gradient(180deg, #162235 0%, var(--csuf-bg) 78%);
-}
-
-section.callout blockquote { color: #cfe2ff; }
-
-thead th { color: #e8f1ff; }
-
-tbody td { border-bottom: 1px solid var(--csuf-gray-300); }
+/* Dark mode specific table overrides */
+thead th { background: #0c1b2f; color: #fff; }
+tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
+blockquote { background: rgba(255, 255, 255, 0.05); color: #e8f1ff; }
